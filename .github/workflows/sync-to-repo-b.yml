@@ -1,0 +1,21 @@
+name: Sync to Repo-B
+
+on:
+  push:
+    branches:
+      - main  # Ya jo bhi aapki default branch hai
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repo-A
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Push to Repo-B
+        run: |
+          git remote add repo-b https://${{ secrets.REPO_B_TOKEN }}@github.com/mumerdevops/Repo-B.git
+          git push repo-b main:main --force
